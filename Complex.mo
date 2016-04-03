@@ -30,8 +30,7 @@ operator record Complex "Complex number with overloaded operators"
             radius=25.0)}));
   end 'constructor';
 
-  encapsulated operator function '0'
-    "Zero-element of addition (= Complex(0))"
+  encapsulated operator function '0' "Zero-element of addition (= Complex(0))"
     import Complex;
     output Complex result "Complex(0)";
   algorithm
@@ -210,6 +209,19 @@ operator record Complex "Complex number with overloaded operators"
 </html>"));
   end '==';
 
+  encapsulated operator function '<>'
+    "Test whether two complex numbers are not identical"
+    import Complex;
+    input Complex c1 "Complex number 1";
+    input Complex c2 "Complex number 2";
+    output Boolean result "c1 <> c2";
+  algorithm
+    result := c1.re <> c2.re or c1.im <> c2.im;
+    annotation(Inline=true, Documentation(info="<html>
+    <p>This function tests whether two given Complex numbers are not equal.</p>
+</html>"));
+  end '<>';
+
   encapsulated operator function 'String'
     "Transform Complex number into a String representation"
     import Complex;
@@ -235,13 +247,15 @@ operator record Complex "Complex number with overloaded operators"
 </html>"));
   end 'String';
 
+
 annotation (Protection(access=Access.hide),
-version="3.2.1",
-versionBuild=2,
-versionDate="2013-08-14",
-dateModified = "2013-08-14 08:44:41Z",
-revisionId="$Id:: Complex.mo 6931 2013-08-14 11:38:51Z #$",
+version="3.2.2",
+versionBuild=0,
+versionDate="2016-01-15",
+dateModified = "2016-01-15 08:44:41Z",
+revisionId="$Id::                                       $",
 conversion(
+ noneFromVersion="3.2.1",
  noneFromVersion="1.0",
  noneFromVersion="1.1"),
 Documentation(info="<html>
@@ -256,4 +270,5 @@ Documentation(info="<html>
           lineColor={255,255,255},
           extent={{-90,-50},{90,50}},
           textString="C")}));
+
 end Complex;

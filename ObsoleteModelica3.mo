@@ -36,9 +36,9 @@ Connector with one signal of type .
         extends ObsoleteModelica3.Icons.ObsoleteBlock;
         ObsoleteModelica3.Blocks.Interfaces.RealSignal newReal
             "Connector of Modelica version 2.1"                annotation (                            Hide=true,
-              Placement(transformation(extent={{100,-10},{120,10}}, rotation=0)));
+              Placement(transformation(extent={{100,-10},{120,10}})));
         RealPort oldReal(final n=1) "Connector of Modelica version 1.6" annotation (Placement(
-                transformation(extent={{-120,-10},{-100,10}}, rotation=0)));
+                transformation(extent={{-120,-10},{-100,10}})));
 
         protected
         connector RealPort "Connector with signals of type Real"
@@ -49,7 +49,7 @@ Connector with one signal of type .
         end RealPort;
       equation
         newReal = oldReal.signal[1];
-        annotation(__Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+        annotation(defaultConnectionStructurallyInconsistent=true,
           obsolete="Model is not balanced, so equation check will not work. This model is no longer needed",
           Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
                     {100,100}}), graphics={
@@ -85,9 +85,9 @@ This block is only provided for backward compatibility.
         ObsoleteModelica3.Blocks.Interfaces.BooleanSignal newBoolean
             "Connector of Modelica version 2.1"
           annotation (                            Hide=true, Placement(
-                transformation(extent={{100,-10},{120,10}}, rotation=0)));
+                transformation(extent={{100,-10},{120,10}})));
         BooleanPort oldBoolean(final n=1) "Connector of Modelica version 1.6" annotation (Placement(
-                transformation(extent={{-120,-10},{-100,10}}, rotation=0)));
+                transformation(extent={{-120,-10},{-100,10}})));
 
         protected
         connector BooleanPort "Connector with signals of type Boolean"
@@ -100,7 +100,7 @@ This block is only provided for backward compatibility.
 
         newBoolean = oldBoolean.signal[1];
 
-        annotation(__Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+        annotation(defaultConnectionStructurallyInconsistent=true,
           obsolete="Model is not balanced, so equation check will not work. This model is no longer needed",
           Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
                     {100,100}}), graphics={
@@ -136,9 +136,9 @@ This block is only provided for backward compatibility.
         ObsoleteModelica3.Blocks.Interfaces.IntegerSignal newInteger
             "Connector of Modelica version 2.1"
           annotation (                            Hide=true, Placement(
-                transformation(extent={{100,-10},{120,10}}, rotation=0)));
+                transformation(extent={{100,-10},{120,10}})));
         IntegerPort oldInteger(final n=1) "Connector of Modelica version 1.6"  annotation (Placement(
-                transformation(extent={{-120,-10},{-100,10}}, rotation=0)));
+                transformation(extent={{-120,-10},{-100,10}})));
 
         protected
         connector IntegerPort "Connector with signals of type Integer"
@@ -151,7 +151,7 @@ This block is only provided for backward compatibility.
 
         newInteger = oldInteger.signal[1];
 
-        annotation(__Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+        annotation(defaultConnectionStructurallyInconsistent=true,
           obsolete="Model is not balanced, so equation check will not work. This model is no longer needed",
            Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
                     {100,100}}), graphics={
@@ -240,8 +240,7 @@ The desired conversion can be selected in the parameter menu
             Modelica.Blocks.Interfaces.RealInput u1
           "Connector of first Real input signal"
               annotation (                                       layer="icon",
-            Placement(transformation(extent={{-139.742,-19.0044},{-100,20}},
-                rotation=0)));
+            Placement(transformation(extent={{-139.742,-19.0044},{-100,20}})));
             Modelica.Blocks.Interfaces.RealInput u2
           "Connector of second Real input signal (u1=u2)"
                                            annotation (
@@ -251,7 +250,7 @@ The desired conversion can be selected in the parameter menu
               rotation=180)));
       equation
             u1 = u2;
-            annotation(__Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+            annotation(defaultConnectionStructurallyInconsistent=true,
               obsolete="Model is not balanced, i.e., not according to Modelica Language 3.0. Use instead Modelica.Blocks.Math.InverseBlockConstraints",
               Documentation(info="<HTML>
 <p>
@@ -274,8 +273,7 @@ defined as outputs (e.g., useful for inverse model generation).
             extends ObsoleteModelica3.Icons.ObsoleteBlock;
             output Modelica.Blocks.Interfaces.RealOutput y1
           "Connector of first Real output signal"
-              annotation (Placement(transformation(extent={{100,-10},{120,10}},
-                rotation=0)));
+              annotation (Placement(transformation(extent={{100,-10},{120,10}})));
             output Modelica.Blocks.Interfaces.RealOutput y2
           "Connector of second Real output signal (y1=y2)"
                                                    annotation (Placement(
@@ -285,7 +283,7 @@ defined as outputs (e.g., useful for inverse model generation).
               rotation=180)));
           equation
             y1 = y2;
-            annotation(__Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+            annotation(defaultConnectionStructurallyInconsistent=true,
               obsolete="Model is not balanced, i.e., not according to Modelica Language 3.0. Use instead Modelica.Blocks.Math.InverseBlockConstraints",
               Documentation(info="<html>
 <p>
@@ -505,8 +503,7 @@ This icon is designed for an <b>enumeration</b>
 
           Modelica.Blocks.Interfaces.RealInput load[6]
             "[1:6] = x-, y-, z-coordinates of force and x-, y-, z-coordiantes of torque resolved in world frame"
-            annotation (Placement(transformation(extent={{-140,-20},{-100,20}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
           parameter Boolean animation=true
             "= true, if animation shall be enabled";
           parameter Real N_to_m(unit="N/m") = world.defaultN_to_m
@@ -569,7 +566,6 @@ This icon is designed for an <b>enumeration</b>
                   points={{-100,11},{-94,24},{-86,39},{-74,59},{-65,71},{-52,83},
                       {-35,92},{-22,95},{-8,95},{7,91},{19,84},{32,76},{44,66},
                       {52,58},{58,51}},
-                  color={0,0,0},
                   thickness=0.5),
                 Polygon(
                   points={{97,18},{72,77},{38,42},{97,18}},
@@ -593,7 +589,6 @@ This icon is designed for an <b>enumeration</b>
                   points={{-98,14},{-92,27},{-84,42},{-72,62},{-63,74},{-50,86},
                       {-33,95},{-20,98},{-6,98},{9,94},{21,87},{34,79},{46,69},
                       {54,61},{60,54}},
-                  color={0,0,0},
                   thickness=0.5),
                 Polygon(
                   points={{99,21},{74,80},{40,45},{99,21}},
@@ -656,8 +651,7 @@ This leads to the following animation
                 rotation=270)));
           Modelica.Blocks.Interfaces.RealInput load[6]
             "[1:6] = x-, y-, z-coordinates of force and x-, y-, z-coordiantes of torque resolved in frame_b or frame_resolved (if connected)"
-            annotation (Placement(transformation(extent={{-140,-20},{-100,20}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
           parameter Boolean animation=true
             "= true, if animation shall be enabled";
           parameter Real N_to_m(unit="N/m") = world.defaultN_to_m
@@ -731,7 +725,7 @@ This leads to the following animation
                   fillPattern=FillPattern.Solid),
                 Line(points={{-100,11},{-94,24},{-86,39},{-74,59},{-65,71},{-52,
                       83},{-35,92},{-22,95},{-8,95},{7,91},{19,84},{32,76},{44,
-                      66},{52,58},{58,51}}, color={0,0,0}),
+                      66},{52,58},{58,51}}),
                 Polygon(
                   points={{97,18},{72,77},{38,42},{97,18}},
                   lineColor={0,0,0},
@@ -756,7 +750,7 @@ This leads to the following animation
                 Text(extent={{-137,-47},{148,-108}}, textString="%name"),
                 Line(points={{-100,10},{-92,26},{-84,42},{-76,52},{-60,68},{-46,
                       76},{-31,82},{-17,85},{-2,87},{14,86},{26,82},{37,75},{46,
-                      69},{54,61},{60,54}}, color={0,0,0}),
+                      69},{54,61},{60,54}}),
                 Polygon(
                   points={{99,21},{74,80},{40,45},{99,21}},
                   lineColor={0,0,0},
@@ -966,12 +960,12 @@ This leads to the following animation
                   lineColor={0,0,0},
                   fillColor={0,0,0},
                   fillPattern=FillPattern.Solid),
-                Line(points={{-64,0},{-20,0}}, color={0,0,0}),
-                Line(points={{20,0},{65,0}}, color={0,0,0}),
+                Line(points={{-64,0},{-20,0}}),
+                Line(points={{20,0},{65,0}}),
                 Line(points={{-79,47},{-70,61},{-59,72},{-45,81},{-32,84},{-20,
-                      85}}, color={0,0,0}),
+                      85}}),
                 Line(points={{76,47},{66,60},{55,69},{49,74},{41,80},{31,84},{
-                      20,85}}, color={0,0,0})}),
+                      20,85}})}),
             Documentation(info="<HTML>
 <p>
 The <b>6</b> signals of the <b>load</b> connector are interpreted
@@ -1026,10 +1020,10 @@ clarity this is not shown in the animation):
           extends ObsoleteModelica3.Icons.ObsoleteModel;
           Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a
             "Coordinate system with one cut-force and cut-torque"                          annotation (Placement(
-                transformation(extent={{-116,-16},{-84,16}}, rotation=0)));
+                transformation(extent={{-116,-16},{-84,16}})));
           Modelica.Mechanics.MultiBody.Interfaces.Frame_b frame_b
             "Coordinate system with one cut-force and cut-torque"                          annotation (Placement(
-                transformation(extent={{84,-16},{116,16}}, rotation=0)));
+                transformation(extent={{84,-16},{116,16}})));
           Modelica.Mechanics.MultiBody.Interfaces.Frame_resolve frame_resolve
             "If connected, the output signals are resolved in this frame (cut-force/-torque are set to zero)"
             annotation (Placement(transformation(
@@ -1078,8 +1072,8 @@ with the blocks of package Modelica.Blocks.
                 preserveAspectRatio=true,
                 extent={{-100,-100},{100,100}}),
                 graphics={
-                Line(points={{-70,0},{-101,0}}, color={0,0,0}),
-                Line(points={{70,0},{100,0}}, color={0,0,0}),
+                Line(points={{-70,0},{-101,0}}),
+                Line(points={{70,0},{100,0}}),
                 Line(points={{-80,-100},{-80,0}}, color={0,0,127}),
                 Text(
                   extent={{-132,76},{129,124}},
@@ -1105,8 +1099,8 @@ with the blocks of package Modelica.Blocks.
                 preserveAspectRatio=true,
                 extent={{-100,-100},{100,100}}),
                 graphics={
-                Line(points={{-70,0},{-100,0}}, color={0,0,0}),
-                Line(points={{70,0},{100,0}}, color={0,0,0}),
+                Line(points={{-70,0},{-100,0}}),
+                Line(points={{70,0},{100,0}}),
                 Line(points={{-80,-100},{-80,0}}, color={0,0,127}),
                 Line(
                   points={{80,0},{80,-100}},
@@ -1126,20 +1120,17 @@ with the blocks of package Modelica.Blocks.
             extends ObsoleteModelica3.Icons.ObsoleteModel;
             Modelica.Mechanics.Rotational.Interfaces.Flange_a axis
               "1-dim. rotational flange that drives the joint"
-              annotation (Placement(transformation(extent={{10,90},{-10,110}}, rotation=0)));
+              annotation (Placement(transformation(extent={{10,90},{-10,110}})));
             Modelica.Mechanics.Rotational.Interfaces.Flange_b bearing
               "1-dim. rotational flange of the drive bearing"
-              annotation (Placement(transformation(extent={{-50,90},{-70,110}}, rotation=
-                      0)));
+              annotation (Placement(transformation(extent={{-50,90},{-70,110}})));
 
             Modelica.Blocks.Interfaces.RealInput position_a[3]
               "Position vector from frame_a to frame_a side of length constraint, resolved in frame_a of revolute joint"
-              annotation (Placement(transformation(extent={{-140,-80},{-100,-40}},
-                    rotation=0)));
+              annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
             Modelica.Blocks.Interfaces.RealInput position_b[3]
               "Position vector from frame_b to frame_b side of length constraint, resolved in frame_b of revolute joint"
-              annotation (Placement(transformation(extent={{140,-80},{100,-40}}, rotation=
-                     0)));
+              annotation (Placement(transformation(extent={{140,-80},{100,-40}})));
 
             parameter Boolean animation=true
               "= true, if animation shall be enabled";
@@ -1375,7 +1366,7 @@ position a degree of freedom is lost.
 
             angle = Modelica.Math.atan2(ksin_angle, kcos_angle);
             annotation (
-              __Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+              defaultConnectionStructurallyInconsistent=true,
               preferredView="info",
               obsolete="Obsolete model that is not balanced. Use instead Modelica.Mechanics.MultiBody.Joints.Internal.RevoluteWithLengthConstraint",
               Icon(coordinateSystem(
@@ -1404,11 +1395,11 @@ position a degree of freedom is lost.
                     extent={{-142,-108},{147,-69}},
                     lineColor={0,0,0},
                     textString="n=%n"),
-                  Line(points={{-60,60},{-60,90}}, color={0,0,0}),
-                  Line(points={{-20,70},{-60,70}}, color={0,0,0}),
-                  Line(points={{-20,80},{-20,60}}, color={0,0,0}),
-                  Line(points={{20,80},{20,60}}, color={0,0,0}),
-                  Line(points={{20,70},{41,70}}, color={0,0,0}),
+                  Line(points={{-60,60},{-60,90}}),
+                  Line(points={{-20,70},{-60,70}}),
+                  Line(points={{-20,80},{-20,60}}),
+                  Line(points={{20,80},{20,60}}),
+                  Line(points={{20,70},{41,70}}),
                   Polygon(
                     points={{-9,30},{10,30},{30,50},{-29,50},{-9,30}},
                     lineColor={0,0,0},
@@ -1443,11 +1434,11 @@ position a degree of freedom is lost.
                     lineColor={0,0,0},
                     fillPattern=FillPattern.HorizontalCylinder,
                     fillColor={192,192,192}),
-                  Line(points={{-60,60},{-60,96}}, color={0,0,0}),
-                  Line(points={{-20,70},{-60,70}}, color={0,0,0}),
-                  Line(points={{-20,80},{-20,60}}, color={0,0,0}),
-                  Line(points={{20,80},{20,60}}, color={0,0,0}),
-                  Line(points={{20,70},{41,70}}, color={0,0,0}),
+                  Line(points={{-60,60},{-60,96}}),
+                  Line(points={{-20,70},{-60,70}}),
+                  Line(points={{-20,80},{-20,60}}),
+                  Line(points={{20,80},{20,60}}),
+                  Line(points={{20,70},{41,70}}),
                   Polygon(
                     points={{-9,30},{10,30},{30,50},{-29,50},{-9,30}},
                     lineColor={0,0,0},
@@ -1493,18 +1484,16 @@ joints.</b>
             extends ObsoleteModelica3.Icons.ObsoleteModel;
             Modelica.Mechanics.Translational.Interfaces.Flange_a axis
               "1-dim. translational flange that drives the joint"
-              annotation (Placement(transformation(extent={{70,80},{90,60}}, rotation=0)));
+              annotation (Placement(transformation(extent={{70,80},{90,60}})));
             Modelica.Mechanics.Translational.Interfaces.Flange_b bearing
               "1-dim. translational flange of the drive bearing"
-              annotation (Placement(transformation(extent={{-30,80},{-50,60}}, rotation=0)));
+              annotation (Placement(transformation(extent={{-30,80},{-50,60}})));
             Modelica.Blocks.Interfaces.RealInput position_a[3]
               "Position vector from frame_a to frame_a side of length constraint, resolved in frame_a of revolute joint"
-              annotation (Placement(transformation(extent={{-140,-80},{-100,-40}},
-                    rotation=0)));
+              annotation (Placement(transformation(extent={{-140,-80},{-100,-40}})));
             Modelica.Blocks.Interfaces.RealInput position_b[3]
               "Position vector from frame_b to frame_b side of length constraint, resolved in frame_b of revolute joint"
-              annotation (Placement(transformation(extent={{140,-80},{100,-40}}, rotation=
-                     0)));
+              annotation (Placement(transformation(extent={{140,-80},{100,-40}})));
 
             parameter Boolean animation=true
               "= true, if animation shall be enabled";
@@ -1682,7 +1671,7 @@ degree of freedom is lost.
             k2 = sqrt(k1b);
             distance = -k1 + (if positiveBranch then k2 else -k2);
             annotation (
-              __Dymola_structurallyIncomplete=true,defaultConnectionStructurallyInconsistent=true,
+              defaultConnectionStructurallyInconsistent=true,
               preferredView="info",
               obsolete="Obsolete model that is not balanced. Use instead Modelica.Mechanics.MultiBody.Joints.Internal.PrismaticWithLengthConstraint",
               Icon(coordinateSystem(
@@ -1730,7 +1719,7 @@ degree of freedom is lost.
                   preserveAspectRatio=false,
                   extent={{-100,-100},{100,100}}),
                   graphics={
-                  Line(points={{-30,-50},{-30,50}}, color={0,0,0}),
+                  Line(points={{-30,-50},{-30,50}}),
                   Line(points={{0,-67},{90,-67}}, color={128,128,128}),
                   Text(
                     extent={{31,-68},{68,-81}},
@@ -2835,12 +2824,10 @@ with negative sign at frame_a.
 
           Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a
             "(left) driving flange (flange axis directed INTO cut plane)"
-            annotation (Placement(transformation(extent={{-110,-10},{-90,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
           Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b
             "(right) driven flange (flange axis directed OUT OF cut plane)"
-            annotation (Placement(transformation(extent={{90,-10},{110,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{90,-10},{110,10}})));
         equation
           flange_a.phi = phi;
           flange_b.phi = phi;
@@ -2865,7 +2852,7 @@ with inertia.
           Modelica.Mechanics.Rotational.Interfaces.Flange_a bearing
             "Flange of bearing"
                            annotation (Placement(transformation(extent={{-10,-110},
-                    {10,-90}}, rotation=0)));
+                    {10,-90}})));
           annotation (
             obsolete=
                 "The Rotational library has now a new improved design with optional support connectors. Use Modelica.Mechanics.Rotational.Interfaces.PartialXXX instead.",
@@ -2961,7 +2948,7 @@ It is used e.g., to build up equation-based parts of a drive train.</p>
         equation
           tau_support = -adapter.flange_b.tau;
           connect(adapter.flange_a, bearing) annotation (Line(points={{
-                  -6.12323e-016,-70},{0,-70},{0,-100}}, color={0,0,0}));
+                  0,-70},{0,-70},{0,-100}}));
           annotation (obsolete=
                 "The Rotational library has now a new improved design with optional support connectors. Use Modelica.Mechanics.Rotational.Interfaces.PartialXXX instead.",
         Documentation(info="<html>
@@ -2982,12 +2969,10 @@ of several base components.</p>
             "accelerating torque acting at flange";
           Modelica.Mechanics.Rotational.Interfaces.Flange_b flange
             "Flange on which torque is acting"
-            annotation (Placement(transformation(extent={{110,-10},{90,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{110,-10},{90,10}})));
           Modelica.Mechanics.Rotational.Interfaces.Flange_a bearing
             "Bearing at which the reaction torque (i.e., -flange.tau) is acting"
-               annotation (Placement(transformation(extent={{-10,-130},{10,-110}},
-                  rotation=0)));
+               annotation (Placement(transformation(extent={{-10,-130},{10,-110}})));
         equation
           if cardinality(bearing) == 0 then
             bearing.phi = 0;
@@ -3002,18 +2987,18 @@ of several base components.</p>
                   lineColor={255,255,255},
                   fillColor={255,255,255},
                   fillPattern=FillPattern.Solid),
-                Line(points={{-30,-70},{30,-70}}, color={0,0,0}),
-                Line(points={{-30,-90},{-10,-70}}, color={0,0,0}),
-                Line(points={{-10,-90},{10,-70}}, color={0,0,0}),
+                Line(points={{-30,-70},{30,-70}}),
+                Line(points={{-30,-90},{-10,-70}}),
+                Line(points={{-10,-90},{10,-70}}),
                 Rectangle(
                   extent={{-20,-100},{20,-140}},
                   lineColor={192,192,192},
                   fillColor={192,192,192},
                   fillPattern=FillPattern.Solid),
-                Line(points={{10,-90},{30,-70}}, color={0,0,0}),
-                Line(points={{0,-70},{0,-110}}, color={0,0,0}),
+                Line(points={{10,-90},{30,-70}}),
+                Line(points={{0,-70},{0,-110}}),
                 Line(points={{-92,0},{-76,36},{-54,62},{-30,80},{-14,88},{10,92},
-                      {26,90},{46,80},{64,62}}, color={0,0,0}),
+                      {26,90},{46,80},{64,62}}),
                 Text(
                   extent={{-150,140},{150,100}},
                   lineColor={0,0,255},
@@ -3039,11 +3024,9 @@ Partial model of torque dependent on speed that accelerates the flange.
 
           Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a
             "(left) flange to be measured (flange axis directed INTO cut plane)"
-            annotation (Placement(transformation(extent={{-110,-10},{-90,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
           Modelica.Blocks.Interfaces.RealOutput y "Sensor signal"
-            annotation (Placement(transformation(extent={{100,-10},{120,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{100,-10},{120,10}})));
           annotation (
             obsolete=
                 "Use Modelica.Mechanics.Rotational.Interfaces.PartialAbsoluteSensor instead and define a meaningful name for the output signal.",
@@ -3059,7 +3042,7 @@ with the blocks of package Modelica.Blocks.
                 preserveAspectRatio=true,
                 extent={{-100,-100},{100,100}}),
                 graphics={
-                Line(points={{-70,0},{-90,0}}, color={0,0,0}),
+                Line(points={{-70,0},{-90,0}}),
                 Line(points={{70,0},{100,0}}, color={0,0,127}),
                 Text(
                   extent={{150,80},{-150,120}},
@@ -3080,12 +3063,10 @@ with the blocks of package Modelica.Blocks.
 
           Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a
             "(left) driving flange (flange axis directed INTO cut plane)"
-            annotation (Placement(transformation(extent={{-110,-10},{-90,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
           Modelica.Mechanics.Rotational.Interfaces.Flange_b flange_b
             "(right) driven flange (flange axis directed OUT OF cut plane)"
-            annotation (Placement(transformation(extent={{90,-10},{110,10}},
-                  rotation=0)));
+            annotation (Placement(transformation(extent={{90,-10},{110,10}})));
           Modelica.Blocks.Interfaces.RealOutput y "Sensor signal"
             annotation (Placement(transformation(
                 origin={0,-110},
@@ -3107,8 +3088,8 @@ with the blocks of package Modelica.Blocks.
                 preserveAspectRatio=true,
                 extent={{-100,-100},{100,100}}),
                 graphics={
-                Line(points={{-70,0},{-90,0}}, color={0,0,0}),
-                Line(points={{70,0},{90,0}}, color={0,0,0}),
+                Line(points={{-70,0},{-90,0}}),
+                Line(points={{70,0},{90,0}}),
                 Line(points={{0,-100},{0,-70}}, color={0,0,127}),
                 Text(
                   extent={{-150,70},{150,110}},
@@ -3118,8 +3099,8 @@ with the blocks of package Modelica.Blocks.
                 preserveAspectRatio=true,
                 extent={{-100,-100},{100,100}}),
                 graphics={
-                Line(points={{-70,0},{-90,0}}, color={0,0,0}),
-                Line(points={{70,0},{90,0}}, color={0,0,0}),
+                Line(points={{-70,0},{-90,0}}),
+                Line(points={{70,0},{90,0}}),
                 Line(points={{0,-100},{0,-70}}, color={0,0,255})}));
         end RelativeSensor;
       end Interfaces;
@@ -3268,8 +3249,8 @@ user interface when the type is used as parameter in a declaration.
                 lineColor={0,0,0},
                 fillPattern=FillPattern.HorizontalCylinder,
                 fillColor={192,192,192}),
-              Line(points={{-30,-40},{30,-40}}, color={0,0,0}),
-              Line(points={{0,-40},{0,-90}}, color={0,0,0}),
+              Line(points={{-30,-40},{30,-40}}),
+              Line(points={{0,-40},{0,-90}}),
               Polygon(
                 points={{-30,-20},{60,-20},{60,-80},{70,-80},{50,-100},{30,-80},
                     {40,-80},{40,-30},{-30,-30},{-30,-20},{-30,-20}},
@@ -3280,13 +3261,13 @@ user interface when the type is used as parameter in a declaration.
                 extent={{-150,60},{150,20}},
                 lineColor={0,0,0},
                 textString="eta=%eta"),
-              Line(points={{30,-50},{20,-60}}, color={0,0,0}),
-              Line(points={{30,-40},{10,-60}}, color={0,0,0}),
-              Line(points={{20,-40},{0,-60}}, color={0,0,0}),
-              Line(points={{10,-40},{-10,-60}}, color={0,0,0}),
-              Line(points={{0,-40},{-20,-60}}, color={0,0,0}),
-              Line(points={{-10,-40},{-30,-60}}, color={0,0,0}),
-              Line(points={{-20,-40},{-30,-50}}, color={0,0,0})}),
+              Line(points={{30,-50},{20,-60}}),
+              Line(points={{30,-40},{10,-60}}),
+              Line(points={{20,-40},{0,-60}}),
+              Line(points={{10,-40},{-10,-60}}),
+              Line(points={{0,-40},{-20,-60}}),
+              Line(points={{-10,-40},{-30,-60}}),
+              Line(points={{-20,-40},{-30,-50}})}),
           Documentation(info="<html>
 <p>
 THIS COMPONENT IS <b>OBSOLETE</b> and should <b>no longer be used</b>. It is only
@@ -3348,10 +3329,10 @@ from tables of the gear manufacturers.
                 lineColor={0,0,0},
                 fillPattern=FillPattern.HorizontalCylinder,
                 fillColor={192,192,192}),
-              Line(points={{-30,-40},{30,-40}}, color={0,0,0}),
-              Line(points={{0,60},{0,40}}, color={0,0,0}),
-              Line(points={{-30,40},{29,40}}, color={0,0,0}),
-              Line(points={{0,-40},{0,-90}}, color={0,0,0}),
+              Line(points={{-30,-40},{30,-40}}),
+              Line(points={{0,60},{0,40}}),
+              Line(points={{-30,40},{29,40}}),
+              Line(points={{0,-40},{0,-90}}),
               Polygon(
                 points={{-30,-20},{60,-20},{60,-80},{70,-80},{50,-100},{30,-80},
                     {40,-80},{40,-30},{-30,-30},{-30,-20},{-30,-20}},
@@ -3368,13 +3349,13 @@ from tables of the gear manufacturers.
                 fillColor={128,128,128},
                 fillPattern=FillPattern.Solid),
               Line(points={{-78,76},{-7,76}}, color={128,128,128}),
-              Line(points={{30,-50},{20,-60}}, color={0,0,0}),
-              Line(points={{30,-40},{10,-60}}, color={0,0,0}),
-              Line(points={{20,-40},{0,-60}}, color={0,0,0}),
-              Line(points={{10,-40},{-10,-60}}, color={0,0,0}),
-              Line(points={{0,-40},{-20,-60}}, color={0,0,0}),
-              Line(points={{-10,-40},{-30,-60}}, color={0,0,0}),
-              Line(points={{-20,-40},{-30,-50}}, color={0,0,0})}));
+              Line(points={{30,-50},{20,-60}}),
+              Line(points={{30,-40},{10,-60}}),
+              Line(points={{20,-40},{0,-60}}),
+              Line(points={{10,-40},{-10,-60}}),
+              Line(points={{0,-40},{-20,-60}}),
+              Line(points={{-10,-40},{-30,-60}}),
+              Line(points={{-20,-40},{-30,-50}})}));
       end GearEfficiency;
 
       model Gear
@@ -3401,45 +3382,37 @@ from tables of the gear manufacturers.
 
         Modelica.Mechanics.Rotational.Components.IdealGear gearRatio(final
             ratio =                                                              ratio)
-          annotation (Placement(transformation(extent={{-70,-10},{-50,10}},
-                rotation=0)));
+          annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
         ObsoleteModelica3.Mechanics.Rotational.GearEfficiency gearEfficiency(
                                       final eta=eta)
-          annotation (Placement(transformation(extent={{-30,-10},{-10,10}},
-                rotation=0)));
+          annotation (Placement(transformation(extent={{-30,-10},{-10,10}})));
         Modelica.Mechanics.Rotational.Components.ElastoBacklash elastoBacklash(
           final b=b,
           final c=c,
           final phi_rel0=0,
-          final d=d) annotation (Placement(transformation(extent={{50,-10},{70,10}},
-                rotation=0)));
+          final d=d) annotation (Placement(transformation(extent={{50,-10},{70,10}})));
         Modelica.Mechanics.Rotational.Components.BearingFriction
           bearingFriction(                                                       final
             tau_pos=friction_pos, final peak=peak)
-          annotation (Placement(transformation(extent={{10,-10},{30,10}}, rotation=
-                  0)));
+          annotation (Placement(transformation(extent={{10,-10},{30,10}})));
       equation
         connect(flange_a, gearRatio.flange_a)
-          annotation (Line(points={{-100,0},{-70,0}}, color={0,0,0}));
+          annotation (Line(points={{-100,0},{-70,0}}));
         connect(gearRatio.flange_b, gearEfficiency.flange_a)
-          annotation (Line(points={{-50,0},{-30,0}}, color={0,0,0}));
+          annotation (Line(points={{-50,0},{-30,0}}));
         connect(gearEfficiency.flange_b, bearingFriction.flange_a)
-          annotation (Line(points={{-10,0},{10,0}}, color={0,0,0}));
+          annotation (Line(points={{-10,0},{10,0}}));
         connect(bearingFriction.flange_b, elastoBacklash.flange_a)
-          annotation (Line(points={{30,0},{50,0}}, color={0,0,0}));
+          annotation (Line(points={{30,0},{50,0}}));
         connect(elastoBacklash.flange_b, flange_b)
-          annotation (Line(points={{70,0},{100,0}}, color={0,0,0}));
+          annotation (Line(points={{70,0},{100,0}}));
         connect(gearEfficiency.bearing, adapter.flange_b) annotation (Line(points={{-20,-10},
-                {-20,-40},{6.12323e-016,-40},{6.12323e-016,-50}},           color={
+                {-20,-40},{0,-40},{0,-50}},           color={
                 0,0,0}));
         connect(bearingFriction.support, adapter.flange_b) annotation (Line(
-            points={{20,-10},{20,-40},{6.12323e-016,-40},{6.12323e-016,-50}},
-            color={0,0,0},
-            smooth=Smooth.None));
+            points={{20,-10},{20,-40},{0,-40},{0,-50}}));
         connect(gearRatio.support, adapter.flange_b) annotation (Line(
-            points={{-60,-10},{-60,-40},{6.12323e-016,-40},{6.12323e-016,-50}},
-            color={0,0,0},
-            smooth=Smooth.None));
+            points={{-60,-10},{-60,-40},{0,-40},{0,-50}}));
 
         annotation (
           obsolete=
@@ -3459,7 +3432,6 @@ to the left and/or the right flange.
               Rectangle(
                 extent={{-40,60},{40,-60}},
                 lineColor={0,0,0},
-                pattern=LinePattern.Solid,
                 lineThickness=0.25,
                 fillPattern=FillPattern.HorizontalCylinder,
                 fillColor={192,192,192}),
@@ -3512,7 +3484,7 @@ to the left and/or the right flange.
       end Gear;
     end Rotational;
   end Mechanics;
-  annotation (uses(Modelica(version="3.2.1")),
+  annotation (uses(Modelica(version="3.2.2")),
 Documentation(info="<html>
 <p>
 This package contains models and blocks from the Modelica Standard Library
@@ -3550,7 +3522,7 @@ marked in the icon layer with a red box.
 </p>
 
 <p>
-Copyright &copy; 2007-2015, Modelica Association.
+Copyright &copy; 2007-2016, Modelica Association.
 </p>
 <p>
 <i>This Modelica package is <u>free</u> software and the use is completely at <u>your own risk</u>; it can be redistributed and/or modified under the terms of the Modelica License 2. For license conditions (including the disclaimer of warranty) see <a href=\"modelica://Modelica.UsersGuide.ModelicaLicense2\">Modelica.UsersGuide.ModelicaLicense2</a> or visit <a href=\"https://www.modelica.org/licenses/ModelicaLicense2\"> https://www.modelica.org/licenses/ModelicaLicense2</a>.</i>
