@@ -46,7 +46,7 @@ The returned Integer number of <code>dow</code> has the following meaning:
 </p>
 
 <blockquote>
-<table border=1 cellspacing=0 cellpadding=2>
+<table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">
 <tr><th>Day of week</th>
     <th>Number</th></tr>
 
@@ -897,7 +897,7 @@ String(d, format)
 </p>
 <p>
     If higher time value are not included, they are added to the next lower time value.
-    If e.g. days are not part of the format string, but hours, the number of days will be converted 
+    If e.g. days are not part of the format string, but hours, the number of days will be converted
     to hours and added to the hours value.
 </p>
 <p>
