@@ -660,7 +660,7 @@ String(dt, format=\"%%b\")  // Should give \"%b\", but gives \"Dec.\" instead
 
   end DateTime;
 
-  operator record Duration
+  operator record Duration "Duration record with several constructors and overloaded operators"
     extends Modelica.Icons.Record;
 
     Integer days "Days";
@@ -669,12 +669,12 @@ String(dt, format=\"%%b\")  // Should give \"%b\", but gives \"Dec.\" instead
     Integer seconds "Seconds";
     Integer milliseconds "Milliseconds";
 
-    encapsulated operator 'constructor'
+    encapsulated operator 'constructor' "Available constructors"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.FunctionsPackage;
 
-      function fromInput
+      function fromInput "Create Duration field by field from user input"
         extends Icons.Function;
 
         input Integer days=0 "Days";
@@ -686,14 +686,14 @@ String(dt, format=\"%%b\")  // Should give \"%b\", but gives \"Dec.\" instead
       algorithm
       end fromInput;
 
-      function fromDateTimes
+      function fromDateTimes "Create Duration from two DateTime records"
         import Modelica.Utilities.Time.DateTime;
         import Modelica.Math.nearestInteger;
         extends Icons.Function;
 
         input DateTime t1 "Start time";
         input DateTime t2 "End time";
-        output Duration t;
+        output Duration t "= t2 - t1";
 
       protected
         Real diff;
@@ -730,7 +730,7 @@ String(dt, format=\"%%b\")  // Should give \"%b\", but gives \"Dec.\" instead
 
       end fromDateTimes;
 
-      function fromSeconds "Create duration record from seconds, rounding to the third decimal"
+      function fromSeconds "Create duration record from total amount of seconds, rounding to the third decimal"
         extends Icons.Function;
         import Modelica.Math.nearestInteger;
 
@@ -775,7 +775,7 @@ String(dt, format=\"%%b\")  // Should give \"%b\", but gives \"Dec.\" instead
       import Modelica.Icons;
       extends Icons.FunctionsPackage;
 
-      function formated "Convert duration to string, using string replace"
+      function formated "Convert duration to string, using C inspired conversion specifier characters"
         import Modelica.Utilities.Strings.contains;
         extends Icons.Function;
 
@@ -951,7 +951,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
     end 'String';
 
-    encapsulated operator function '=='
+    encapsulated operator function '==' "Check equality of two Duration objects by normalizing them"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -973,7 +973,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
     end '==';
 
-    encapsulated operator function '<>'
+    encapsulated operator function '<>' "Check inequality of two Duration objects by normalizing them"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -986,20 +986,20 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
       result := not t1 == t2;
     end '<>';
 
-    encapsulated operator function '>'
+    encapsulated operator function '>' "Check if Duration t1 is larger than t2"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
 
       input Duration t1;
       input Duration t2;
-      output Boolean result "= t1 <> t2";
+      output Boolean result "= t1 > t2";
 
     algorithm
       result :=Duration.inSeconds(t1) > Duration.inSeconds(t2);
     end '>';
 
-    encapsulated operator function '>='
+    encapsulated operator function '>=' "Check if Duration t1 is equal to t2 or larger"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -1013,7 +1013,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
     end '>=';
 
-    encapsulated operator function '<'
+    encapsulated operator function '<' "Check if Duration t1 is smaller than t2"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -1027,7 +1027,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
     end '<';
 
-    encapsulated operator function '<='
+    encapsulated operator function '<=' "Check if Duration t1 is equal to t2 or smaller"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -1041,7 +1041,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
     end '<=';
 
-    encapsulated operator function '+'
+    encapsulated operator function '+' "Add Durations t1 and t2 and normalize the sum"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
       extends Icons.Function;
@@ -1066,7 +1066,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
       extends Icons.FunctionsPackage;
 
-      function subtract "Subtract two durations element wise"
+      function subtract "Subtract two durations element wise and normalize the difference"
         extends Icons.Function;
 
         input Duration t1;
@@ -1083,7 +1083,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
       end subtract;
 
-      function negate "Unary minus (multiply duration values by -1)"
+      function negate "Unary minus (multiply all duration values by -1)"
         extends Icons.Function;
 
         input Duration t;
@@ -1131,13 +1131,14 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
       end multiply2;
     end '*';
 
-    encapsulated operator '/'  "Divide a duration by a real"
+    encapsulated operator '/'  "Division"
       import Modelica.Utilities.Time.Duration;
       import Modelica.Icons;
 
       extends Icons.FunctionsPackage;
 
-      function divide "Divide a duration by a real. The first milliseconds value can vary by 1 (due to rounding in the fromSeconds constructor)"
+      function divide
+        "Divide a duration by a real. The first milliseconds value can vary by 1 (due to rounding in the fromSeconds constructor)"
         extends Icons.Function;
 
         input Duration t;
@@ -1169,7 +1170,7 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
     extends Icons.Function;
 
     input Duration t "Value to convert";
-    output Integer[5] t_vec "Elapsed time as vector {days, hours, minutes, seconds, milliseconds}";
+    output Integer[5] t_vec "Duration as vector {days, hours, minutes, seconds, milliseconds}";
 
   algorithm
 
@@ -1177,12 +1178,12 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
   end asVector;
 
-  encapsulated function avg "Return average duration for a vector of durations"
+  encapsulated function avg "Return Duration with averaged values for a vector of durations"
     import Modelica.Utilities.Time.Duration;
     import Modelica.Icons;
     extends Icons.Function;
 
-    input Duration t_vec[:];
+    input Duration t_vec[:] "Vector of duration";
     output Duration t_avg "Average duration";
 
     protected
@@ -1211,7 +1212,8 @@ String(d, format=\"%%days\")  // Should give \"%days\", but gives \"1\" instead
 
   end inSeconds;
 
-  encapsulated function normalize "Reformat duration with usual maximum values for milliseconds, seconds, minutes and hours and carryover to next bigger unit"
+  encapsulated function normalize
+    "Recompute duration with usual maximum values for milliseconds, seconds, minutes and hours"
     import Modelica.Utilities.Time.Duration;
     import Modelica.Icons;
     extends Icons.Function;
