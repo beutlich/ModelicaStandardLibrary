@@ -518,6 +518,13 @@ days = leapDays(2000, 2020) // = 5 leap days in range [2000, 2019]
 
     end epoch;
 
+    encapsulated function now "Get current system date and time as DateTime"
+      import Modelica.Utilities.Time.DateTime;
+      output DateTime now;
+    algorithm
+       now:=DateTime.'constructor'.fromSystemTime();
+    end now;
+
   end DateTime;
 
   operator record Duration
