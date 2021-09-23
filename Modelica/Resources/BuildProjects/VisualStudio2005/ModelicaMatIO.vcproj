@@ -289,10 +289,6 @@
 				RelativePath="..\..\C-Sources\ModelicaMatIO.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\C-Sources\ModelicaUtilities.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

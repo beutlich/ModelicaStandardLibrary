@@ -282,15 +282,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\C-Sources\ModelicaMatIO.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\C-Sources\ModelicaIO.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\C-Sources\ModelicaUtilities.h"
+				RelativePath="..\..\C-Sources\ModelicaMatIO.h"
 				>
 			</File>
 		</Filter>
@@ -301,4 +297,6 @@
 			>
 		</Filter>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>
