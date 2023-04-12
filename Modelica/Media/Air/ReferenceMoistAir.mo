@@ -2387,7 +2387,6 @@ for region 2.
                 T,
             Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.ice09BaseProp_pT(
             p, T));
-
       end h_pT;
 
       function h_pT_der "Derivative function of h_pT"
@@ -2637,7 +2636,7 @@ for region 2.
         end if;
       end if;
       annotation (
-        derivative=rho_pTX_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true);
     end rho_pTX;
@@ -2675,7 +2674,7 @@ for region 2.
         pds := p;
       end if;
       annotation (
-        derivative=pds_pT_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true,
         Documentation(revisions="<html>
@@ -2708,7 +2707,7 @@ for region 2.
         pd := if ((xw <= xws) or (xws == -1)) then pd else pds;
       end if;
       annotation (
-        derivative=pd_pTX_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true);
     end pd_pTX;
@@ -2734,7 +2733,7 @@ for region 2.
     //     pds/(p - pds) else -1;
       xws := if (pds < p) then pds*Modelica.Media.Air.ReferenceMoistAir.k_mair/(p - pds) else Modelica.Constants.inf;
       annotation (
-        derivative=xws_pT_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true,
         Documentation(revisions="<html>
@@ -2929,7 +2928,7 @@ for region 2.
         h := h/(1 + xw);
       end if;
       annotation (
-        derivative=h_pTX_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true);
     end h_pTX;
@@ -3079,7 +3078,7 @@ for region 2.
       input SI.Temperature T "Temperature";
       input SI.MassFraction X[:]=Modelica.Media.Air.ReferenceMoistAir.reference_X
         "Mass fractions";
-      output SI.SpecificEnergy u "Specific entropy";
+      output SI.SpecificEnergy u "Internal energy";
 
     algorithm
       u := Modelica.Media.Air.ReferenceMoistAir.Utilities.h_pTX(
@@ -3090,7 +3089,7 @@ for region 2.
             T,
             X);
       annotation (
-        derivative=u_pTX_der,
+        smoothOrder=1,
         Inline=false,
         LateInline=true);
     end u_pTX;
@@ -3252,274 +3251,6 @@ for region 2.
           /uges*sum(massFraction[j]/MMX[j] for j in 1:4);
       end if;
     end s_dis_pTX;
-
-    function pd_pTX_der "Derivative of partial pressure of steam"
-      extends Modelica.Icons.Function;
-
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input SI.MassFraction X[:]=Modelica.Media.Air.ReferenceMoistAir.reference_X
-        "Mass fractions";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      input Real X_der[:] "Derivative of mass fractions";
-      output Real pd_der "Derivative of partial pressure";
-
-    protected
-      Real xw,      xw_der;
-      Real xws;
-      Real pds,      pds_der;
-
-    algorithm
-      if (X[1] == 0) then
-        //pd := 0;
-        pd_der := 0;
-      else
-        xw := X[1]/(1 - X[1]) "d(xw)/dt = d(xw)/dX[1] * dX[1]/dt";
-        xw_der := (X_der[1]*(1 - X[1]) + X[1]*X_der[1])/(1 - X[1])^2;
-        pds_der := Modelica.Media.Air.ReferenceMoistAir.Utilities.pds_pT_der(
-              p,
-              T,
-              p_der,
-              T_der);
-        //pd := xw/(Modelica.Media.Air.ReferenceMoistAir.k_mair + xw)*p;
-        pd_der := (xw_der*(Modelica.Media.Air.ReferenceMoistAir.k_mair + xw) -
-          xw*xw_der)*p + xw/(Modelica.Media.Air.ReferenceMoistAir.k_mair + xw)*
-          p_der;
-        xws := Modelica.Media.Air.ReferenceMoistAir.Utilities.xws_pT(p, T);
-        pd_der := if (xw <= xws) then pd_der else pds_der;
-      end if;
-      annotation (Documentation(revisions="<html>
-2017-04-13 Stefan Wischhusen: Changed derivative function.
-</html>"));
-    end pd_pTX_der;
-
-    function xws_pT_der
-      "Derivative of humidity ration (absolute) of saturated humid air"
-      extends Modelica.Icons.Function;
-
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      output Real xws_der "Derivative of absolute humidity ratio";
-
-    protected
-      Real pds,      pds_der;
-      Real Tlim;
-
-    algorithm
-      pds := Modelica.Media.Air.ReferenceMoistAir.Utilities.pds_pT(p, T);
-      pds_der := Modelica.Media.Air.ReferenceMoistAir.Utilities.pds_pT_der(
-            p,
-            T,
-            p_der,
-            T_der);
-      Tlim := if (T <= 273.16) then
-        Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.Basic.Tsub(
-        p) else
-        Modelica.Media.Air.ReferenceMoistAir.Utilities.Water95_Utilities.Tsat(p);
-      if (pds < p) then
-        xws_der := Modelica.Media.Air.ReferenceMoistAir.k_mair*((pds_der*(p -
-          pds) + pds*pds_der)/(p - pds)^2);
-      else
-        xws_der := 0;
-      end if;
-      annotation (Documentation(revisions="<html>
-2017-04-13 Stefan Wischhusen: Changed derivative function.
-</html>"));
-    end xws_pT_der;
-
-    function pds_pT_der "Derivative of saturation partial pressure of steam"
-      extends Modelica.Icons.Function;
-
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      output Real pds_der "Derivative of pressure";
-
-    protected
-      Real Tlim;
-
-    algorithm
-      if (T >= 273.16) then
-        pds_der :=
-          Modelica.Media.Air.ReferenceMoistAir.Utilities.Water95_Utilities.psat_der(
-          T, T_der);
-        Tlim :=
-          Modelica.Media.Air.ReferenceMoistAir.Utilities.Water95_Utilities.Tsat(
-          p);
-      else
-        pds_der :=
-          Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.Basic.psub_der(
-          T, T_der);
-        Tlim :=
-          Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.Basic.Tsub(
-          p);
-      end if;
-      if (T <= Tlim) then
-        pds_der := pds_der;
-      else
-        pds_der := p_der;
-      end if;
-      annotation (Documentation(revisions="<html>
-2017-04-13 Stefan Wischhusen: Changed derivative if pds=p.
-</html>"));
-    end pds_pT_der;
-
-    function rho_pTX_der
-      "Derivative of density as a function of pressure p, temperature T and composition X"
-      extends Modelica.Icons.Function;
-
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input SI.MassFraction X[:]=Modelica.Media.Air.ReferenceMoistAir.reference_X
-        "Mass fractions";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      input Real X_der[:] "Derivative of mass fractions";
-      output Real d_der "Derivative of density";
-
-    protected
-      Real pd,      pd_der;
-      Real pl,      pl_der;
-      Real xw,      xw_der;
-      Real xws,      xws_der;
-      Real o[5];
-
-    algorithm
-      if (X[1] == 0) then
-        d_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT_der(
-              p,
-              T,
-              Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(p, T),
-              p_der,
-              T_der);
-      else
-        xw := X[1]/(1 - X[1]);
-        xw_der := (X_der[1])/(1 - X[1])^2;
-        xws := xws_pT(p, T);
-        xws_der := xws_pT_der(
-              p,
-              T,
-              p_der,
-              T_der);
-        pd := pd_pTX(
-              p,
-              T,
-              X);
-        pd_der := Modelica.Media.Air.ReferenceMoistAir.Utilities.pd_pTX_der(
-              p,
-              T,
-              X,
-              p_der,
-              T_der,
-              X_der);
-        pl := p - pd;
-        pl_der := p_der - pd_der;
-        if ((xw <= xws) or (xws == -1)) then
-          if (T < 273.16) then
-            d_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                pl, T),
-                  pl_der,
-                  T_der) + Modelica.Media.Air.ReferenceMoistAir.steam.R_s*(pd_der
-              *T - pd*T_der)/(Modelica.Media.Air.ReferenceMoistAir.steam.R_s*T)^2;
-
-          else
-            d_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                pl, T),
-                  pl_der,
-                  T_der) + IF97_new.rho_pT_der(
-                  pd,
-                  T,
-                  pd_der,
-                  T_der);
-
-          end if;
-        else
-          if (T < 273.16) then
-            o[1] := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT(pl, T);
-            o[2] :=
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.rho_pT(
-              p, T);
-            o[3] := ((1 + xws)/(
-              Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT(pl, T) + pd/
-              (.Modelica.Media.Air.ReferenceMoistAir.steam.R_s*T)) + (xw - xws)/
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.rho_pT(
-              p, T));
-            o[4] := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der);
-
-            o[5] := (xws_der*o[1] - (1 + xws)*o[4])/o[1]^2 + (pd_der*T - pd*
-              T_der)/Modelica.Media.Air.ReferenceMoistAir.steam.R_s/T^2 + (xw_der
-              *o[2] - xw*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.rho_pT_der(
-                  p,
-                  T,
-                Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.ice09BaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der))/o[2]^2 - (xws_der*o[2] - xws*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.rho_pT_der(
-                  p,
-                  T,
-                Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.ice09BaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der))/o[2]^2;
-
-            d_der := (xw_der*o[3] - (1 + xw)*o[5])/o[3]^2;
-
-          else
-            o[1] := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT(pl, T)
-               + IF97_new.rho_pT(pd, T);
-            o[2] := Modelica.Media.Water.IF97_Utilities.rho_pT(p, T);
-            o[3] := ((1 + xws)/(
-              Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT(pl, T) +
-              IF97_new.rho_pT(pd, T)) + (xw - xws)/
-              Modelica.Media.Water.IF97_Utilities.rho_pT(p, T));
-            o[4] := Modelica.Media.Air.ReferenceAir.Air_Utilities.rho_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der) + IF97_new.rho_pT_der(
-                  pd,
-                  T,
-                  pd_der,
-                  T_der);
-
-            o[5] := (xws_der*o[1] - (1 + xws)*o[4])/o[1]^2 + (xw_der*o[2] - xw*
-              Modelica.Media.Water.IF97_Utilities.rho_pT_der(
-                  p,
-                  T,
-                  Modelica.Media.Water.IF97_Utilities.waterBaseProp_pT(p, T),
-                  p_der,
-                  T_der))/o[2]^2 - (xws_der*o[2] - xws*
-              Modelica.Media.Water.IF97_Utilities.rho_pT_der(
-                  p,
-                  T,
-                  Modelica.Media.Water.IF97_Utilities.waterBaseProp_pT(p, T),
-                  p_der,
-                  T_der))/o[2]^2;
-            d_der := (xw_der*o[3] - (1 + xw)*o[5])/o[3]^2;
-          end if;
-        end if;
-      end if;
-    end rho_pTX_der;
 
     function h_dis_pTX_der
       extends Modelica.Icons.Function;
@@ -3714,236 +3445,8 @@ for region 2.
           massFraction_der[j]/MMX[j] for j in 1:4);
         u_der := (o[6]*(uges*sum(massFraction[j]/MMX[j] for j in 1:4)) - l*o[7])
           /(uges*sum(massFraction[j]/MMX[j] for j in 1:4))^2;
-
       end if;
     end h_dis_pTX_der;
-
-    function h_pTX_der "Derivative of specific enthalpy of moist air"
-      extends Modelica.Icons.Function;
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input SI.MassFraction X[:]=Modelica.Media.Air.ReferenceMoistAir.reference_X
-        "Mass fractions";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      input Real X_der[:] "Derivative of mass fractions";
-      output Real h_der "Derivative of specific enthalpy";
-
-    protected
-      SI.SpecificEnthalpy h;
-      Real xw,      xw_der;
-      Real xws,      xws_der;
-      Real pd,      pd_der;
-      Real pl,      pl_der;
-
-    algorithm
-      if (X[1] == 0) then
-        h_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT_der(
-              p,
-              T,
-              Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(p, T),
-              p_der,
-              T_der);
-      else
-        pd := Modelica.Media.Air.ReferenceMoistAir.Utilities.pd_pTX(
-              p,
-              T,
-              X);
-        pd_der := Modelica.Media.Air.ReferenceMoistAir.Utilities.pd_pTX_der(
-              p,
-              T,
-              X,
-              p_der,
-              T_der,
-              X_der);
-        pl := p - pd;
-        pl_der := p_der - pd_der;
-        xw := X[1]/(1 - X[1]);
-        xw_der := (X_der[1])/(1 - X[1])^2;
-        xws := Modelica.Media.Air.ReferenceMoistAir.Utilities.xws_pT(p, T);
-        xws_der := xws_pT_der(
-              p,
-              T,
-              p_der,
-              T_der);
-        if ((xw <= xws) or (xws == -1)) then
-          if (T >= 773.15) then
-            h_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                pl, T),
-                  pl_der,
-                  T_der) + xw_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T) + xw*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT_der(
-                  pd,
-                  T,
-                  0,
-                  pd_der,
-                  T_der) + xw_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.h_dis_pTX(
-                  p,
-                  T,
-                  X) + xw*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.h_dis_pTX_der(
-                  p,
-                  T,
-                  X,
-                  p_der,
-                  T_der,
-                  X_der);
-
-          else
-            h_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                pl, T),
-                  pl_der,
-                  T_der) + xw_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T) + xw*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT_der(
-                  pd,
-                  T,
-                  0,
-                  pd_der,
-                  T_der);
-
-          end if;
-        else
-          if (T < 273.16) then
-            h_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                pl, T),
-                  pl_der,
-                  T_der) + xws_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T) + xws*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT_der(
-                  pd,
-                  T,
-                  0,
-                  pd_der,
-                  T_der) + xw_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.h_pT(
-              p, T) + xw*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.h_pT_der(
-                  p,
-                  T,
-                Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.ice09BaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der) - xws_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.h_pT(
-              p, T) - xws*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.h_pT_der(
-                  p,
-                  T,
-                Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.ice09BaseProp_pT(
-                p, T),
-                  p_der,
-                  T_der);
-
-          else
-            h_der := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT_der(
-                  pl,
-                  T,
-                  Modelica.Media.Air.ReferenceAir.Air_Utilities.airBaseProp_pT(
-                p, T),
-                  pl_der,
-                  T_der) + xws_der*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T) + xws*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT_der(
-                  pd,
-                  T,
-                  0,
-                  pd_der,
-                  T_der) + xw_der*Modelica.Media.Water.IF97_Utilities.h_pT(p, T)
-               + xw*Modelica.Media.Water.IF97_Utilities.h_pT_der(
-                  p,
-                  T,
-                  Modelica.Media.Water.IF97_Utilities.waterBaseProp_pT(p, T),
-                  p_der,
-                  T_der) - xws_der*Modelica.Media.Water.IF97_Utilities.h_pT(p,
-              T) - xws*Modelica.Media.Water.IF97_Utilities.h_pT_der(
-                  p,
-                  T,
-                  Modelica.Media.Water.IF97_Utilities.waterBaseProp_pT(p, T),
-                  p_der,
-                  T_der);
-
-          end if;
-        end if;
-        if ((xw <= xws) or (xws == -1)) then
-          if (T >= 773.15) then
-            h := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT(pl, T) + xw
-              *Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T) + (1 + xw)*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.h_dis_pTX(
-                  p,
-                  T,
-                  X);
-          else
-            h := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT(pl, T) + xw
-              *Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(pd,
-              T);
-          end if;
-        else
-          if (T < 273.16) then
-            h := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT(pl, T) +
-              xws*Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(
-              pd, T) + (xw - xws)*
-              Modelica.Media.Air.ReferenceMoistAir.Utilities.Ice09_Utilities.h_pT(
-              p, T);
-          else
-            h := Modelica.Media.Air.ReferenceAir.Air_Utilities.h_pT(pl, T) +
-              xws*Modelica.Media.Air.ReferenceMoistAir.Utilities.IF97_new.h_pT(
-              pd, T) + (xw - xws)*Modelica.Media.Water.IF97_Utilities.h_pT(p, T);
-          end if;
-        end if;
-        h_der := (h_der*(1 + xw) - h*xw_der)/(1 + xw)^2;
-      end if;
-    end h_pTX_der;
-
-    function u_pTX_der "Derivative of internal energy"
-      extends Modelica.Icons.Function;
-      input SI.AbsolutePressure p "Pressure";
-      input SI.Temperature T "Temperature";
-      input SI.MassFraction X[:]=Modelica.Media.Air.ReferenceMoistAir.reference_X
-        "Mass fractions";
-      input Real p_der "Derivative of pressure";
-      input Real T_der "Derivative of temperature";
-      input Real X_der[:] "Derivative of mass fractions";
-      output Real u_der "Derivative of specific entropy";
-
-    algorithm
-      u_der := Modelica.Media.Air.ReferenceMoistAir.Utilities.h_pTX_der(
-            p,
-            T,
-            X,
-            p_der,
-            T_der,
-            X_der) - (p_der*
-        Modelica.Media.Air.ReferenceMoistAir.Utilities.rho_pTX(
-            p,
-            T,
-            X) - p*Modelica.Media.Air.ReferenceMoistAir.Utilities.rho_pTX_der(
-            p,
-            T,
-            X,
-            p_der,
-            T_der,
-            X_der))/Modelica.Media.Air.ReferenceMoistAir.Utilities.rho_pTX(
-            p,
-            T,
-            X)^2;
-    end u_pTX_der;
   end Utilities;
   annotation (Documentation(info="<html>
 <p>
