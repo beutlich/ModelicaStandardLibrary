@@ -8,7 +8,7 @@ class References "References"
     <tr>
       <td>[Skvarenina01]</td>
       <td>Timothy L. Skvarenina,
-        <a href=\"http://www.crcpress.com/product/isbn/9780849373367\">
+        <a href=\"https://www.routledge.com/The-Power-Electronics-Handbook/Skvarenina/p/book/9780849373367\">
         <em>The Power Electronics Handbook</em></a>,
         CRC Press 2001, ISBN 9780849373367</td>
     </tr>
