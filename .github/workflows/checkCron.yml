@@ -8,7 +8,7 @@ on:
 jobs:
   html_documentation_link_checks:
     timeout-minutes: 5
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
         with:
