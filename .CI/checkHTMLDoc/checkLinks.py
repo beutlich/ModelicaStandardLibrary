@@ -58,7 +58,12 @@ def _checkURL(url):
     except:
         pass
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
+        headers = {
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+            'User-Agent': '"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+        }
         rc = urllib2.urlopen(urllib2.Request(url, None, headers), context=ssl._create_unverified_context()).getcode()
     except urllib2.HTTPError as e:
         rc = e.code
