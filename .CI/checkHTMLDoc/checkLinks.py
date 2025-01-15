@@ -24,7 +24,7 @@ PATTERN = re.compile(r'</?\w+((\s+\w+(\s*=\s*(?:\\"(.|\n)*?\\"|\'(.|\n)*?\'|[^\'
 
 def _getFileURLs(file_name):
     urls = []
-    with open(file_name) as file:
+    with open(file_name, encoding='utf-8') as file:
         i = 1
         for line in file:
             for match in PATTERN.finditer(line):
@@ -59,10 +59,7 @@ def _checkURL(url):
         pass
     try:
         headers = {
-            "Accept": "application/json",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
-            'User-Agent': '"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0",
         }
         rc = urllib2.urlopen(urllib2.Request(url, None, headers), context=ssl._create_unverified_context()).getcode()
     except urllib2.HTTPError as e:
