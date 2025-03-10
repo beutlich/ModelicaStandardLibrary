@@ -20,6 +20,18 @@
 #ifndef G_CONSTRUCTOR_H_
 #define G_CONSTRUCTOR_H_
 
+#ifndef G_MODEL_PREFIX
+#ifdef MODEL_IDENTIFIER
+#define G_MODEL_PREFIX MODEL_IDENTIFIER
+#else
+#define G_MODEL_PREFIX
+#endif
+#endif
+
+#define G_CONCAT(a, b) a ## b
+#define G_CONCAT_(a, b) G_CONCAT(a, b)
+#define G_FUNCNAME(name) G_CONCAT_(G_MODEL_PREFIX, name)
+
 #if defined(__cplusplus)
 
 #define G_HAS_CONSTRUCTORS 1
@@ -53,10 +65,10 @@
 #define G_MSVC_SYMBOL_PREFIX "_"
 #endif
 
-#define G_DEFINE_CONSTRUCTOR(_func) G_MSVC_CTOR (_func, G_MSVC_SYMBOL_PREFIX)
-#define G_DEFINE_DESTRUCTOR(_func) G_MSVC_DTOR (_func, G_MSVC_SYMBOL_PREFIX)
+#define G_DEFINE_CONSTRUCTOR(_func) G_MSVC_CTOR(_func, G_MSVC_SYMBOL_PREFIX)
+#define G_DEFINE_DESTRUCTOR(_func) G_MSVC_DTOR(_func, G_MSVC_SYMBOL_PREFIX)
 
-#define G_MSVC_CTOR(_func,_sym_prefix) \
+#define G_MSVC_CTOR(_func, _sym_prefix) \
   static void _func(void); \
   extern int (* _array ## _func)(void); \
   int _func ## _wrapper(void) { _func(); return _array ## _func == NULL; } \
@@ -64,7 +76,7 @@
   __pragma(section(".CRT$XCU",read)) \
   __declspec(allocate(".CRT$XCU")) int (* _array ## _func)(void) = _func ## _wrapper;
 
-#define G_MSVC_DTOR(_func,_sym_prefix) \
+#define G_MSVC_DTOR(_func, _sym_prefix) \
   static void _func(void); \
   extern int (* _array ## _func)(void); \
   int _func ## _constructor(void) { atexit (_func); return _array ## _func == NULL; } \
