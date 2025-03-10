@@ -1,20 +1,21 @@
 #include "../../../.CI/Test/Common.c"
+#define MODEL_IDENTIFIER ISSUE_4576
 #include "gconstructor.h"
 #include "ModelicaRandom.h"
 
 static int init = 0;
 #ifdef G_DEFINE_CONSTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(ModelicaRandom_initializeCS)
+#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(G_FUNCNAME(ModelicaRandom_initializeCS))
 #endif
-G_DEFINE_CONSTRUCTOR(ModelicaRandom_initializeCS)
-static void ModelicaRandom_initializeCS(void) {
+G_DEFINE_CONSTRUCTOR(G_FUNCNAME(ModelicaRandom_initializeCS))
+static void G_FUNCNAME(ModelicaRandom_initializeCS)(void) {
 	init = 1;
 }
 #ifdef G_DEFINE_DESTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(ModelicaRandom_deleteCS)
+#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(G_FUNCNAME(ModelicaRandom_deleteCS))
 #endif
-G_DEFINE_DESTRUCTOR(ModelicaRandom_deleteCS)
-static void ModelicaRandom_deleteCS(void) {
+G_DEFINE_DESTRUCTOR(G_FUNCNAME(ModelicaRandom_deleteCS))
+static void G_FUNCNAME(ModelicaRandom_deleteCS)(void) {
 	init = 0;
 }
 
