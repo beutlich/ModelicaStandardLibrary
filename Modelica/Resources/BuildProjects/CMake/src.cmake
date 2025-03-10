@@ -121,6 +121,15 @@ add_library(ModelicaStandardTables STATIC ${TABLES_SOURCES})
 add_library(ModelicaMatIO STATIC ${MATIO_SOURCES})
 add_library(ModelicaIO STATIC ${IO_SOURCES})
 
+set(ISSUE4576_SOURCES
+  "${MODELICA_SOURCE_DIR}/issue4576.c"
+  "${MODELICA_SOURCE_DIR}/ModelicaRandom.h"
+  "${MODELICA_SOURCE_DIR}/gconstructor.h"
+)
+
+add_executable(Issue4576 ${ISSUE4576_SOURCES})
+target_link_libraries(Issue4576 ModelicaExternalC)
+
 if(MODELICA_BUILD_ZLIB)
   add_library(zlib STATIC ${ZLIB_SOURCES})
 endif()
