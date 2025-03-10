@@ -776,14 +776,14 @@ static FileCache* fileCache = NULL;
 #include <pthread.h>
 #if defined(G_HAS_CONSTRUCTORS)
 static pthread_mutex_t m;
-G_DEFINE_CONSTRUCTOR(initializeMutex)
-static void initializeMutex(void) {
+G_DEFINE_CONSTRUCTOR(G_FUNCNAME(initializeMutex))
+static void G_FUNCNAME(initializeMutex)(void) {
     if (pthread_mutex_init(&m, NULL) != 0) {
         ModelicaError("Initialization of mutex failed\n");
     }
 }
-G_DEFINE_DESTRUCTOR(destroyMutex)
-static void destroyMutex(void) {
+G_DEFINE_DESTRUCTOR(G_FUNCNAME(destroyMutex))
+static void G_FUNCNAME(destroyMutex)(void) {
     if (pthread_mutex_destroy(&m) != 0) {
         ModelicaError("Destruction of mutex failed\n");
     }
@@ -800,17 +800,17 @@ static pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 #include <windows.h>
 static CRITICAL_SECTION cs;
 #ifdef G_DEFINE_CONSTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(ModelicaInternal_initializeCS)
+#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(G_FUNCNAME(ModelicaInternal_initializeCS))
 #endif
-G_DEFINE_CONSTRUCTOR(ModelicaInternal_initializeCS)
-static void ModelicaInternal_initializeCS(void) {
+G_DEFINE_CONSTRUCTOR(G_FUNCNAME(ModelicaInternal_initializeCS))
+static void G_FUNCNAME(ModelicaInternal_initializeCS)(void) {
     InitializeCriticalSection(&cs);
 }
 #ifdef G_DEFINE_DESTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(ModelicaInternal_deleteCS)
+#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(G_FUNCNAME(ModelicaInternal_deleteCS))
 #endif
-G_DEFINE_DESTRUCTOR(ModelicaInternal_deleteCS)
-static void ModelicaInternal_deleteCS(void) {
+G_DEFINE_DESTRUCTOR(G_FUNCNAME(ModelicaInternal_deleteCS))
+static void G_FUNCNAME(ModelicaInternal_deleteCS)(void) {
     DeleteCriticalSection(&cs);
 }
 #define MUTEX_LOCK() EnterCriticalSection(&cs)
