@@ -92,7 +92,7 @@ jobs:
           if [ "${{ matrix.compiler }}" == "msvc" ]; then
             cmake --build build --config ${{ matrix.configuration }}
           else
-            cmake --build build -- -j8
+            cmake --build build --verbose -- -j8
           fi
       - name: Run tests
         run: ctest --no-tests=error --test-dir build --build-config ${{ matrix.configuration }} --verbose
