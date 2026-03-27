@@ -1,0 +1,15 @@
+name: Print LTX Variables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-vars:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print repository variables
+        run: |
+          echo "LTX_PR_SERVER=${{ vars.LTX_PR_SERVER }}"
+          echo "LTX_SCRIPT_LOCATION=${{ vars.LTX_SCRIPT_LOCATION }}"
+          echo "LTX_TESTING_TOOLS=${{ vars.LTX_TESTING_TOOLS }}"
