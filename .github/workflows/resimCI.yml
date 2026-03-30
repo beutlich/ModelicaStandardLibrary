@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
       - name: Run ReSim
         run: |
           echo "LTX_PR_SERVER=${{ vars.LTX_PR_SERVER }}"
@@ -43,6 +48,10 @@ jobs:
               default:
                 state = "error";
             }
+            
+            const prNumber = run.pull_requests.length > 0 ? run.pull_requests[0].number : null;
+            const ltxPrServer = process.env.LTX_PR_SERVER;
+            const targetUrl = prNumber ? `${ltxPrServer}/${prNumber}/` : ltxPrServer;
       
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
@@ -51,5 +60,5 @@ jobs:
               state: state,
               context: "CI / ReSim checks",
               description: `ReSim finished with ${conclusion}`,
-              target_url: run.html_url
+              target_url: ltxPrServer
             });
