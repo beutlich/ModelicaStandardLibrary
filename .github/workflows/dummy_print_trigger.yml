@@ -6,3 +6,6 @@ on:
 jobs:
   trigger-print-vars:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger from PR
