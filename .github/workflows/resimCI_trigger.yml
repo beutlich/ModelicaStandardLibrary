@@ -6,11 +6,15 @@ on:
 jobs:
   trigger_resim_checks:
     runs-on: ubuntu-latest
-    outputs:
-      pr_number: ${{ steps.set_output.outputs.pr_number }}
 
     steps:
-      - name: Set PR number output
-        id: set_output
+      - name: Save PR number to a file
         run: |
-          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "${{ github.event.pull_request.number }}" > pr_number.txt
+          cat pr_number.txt
+
+      - name: Upload PR number artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: pr-number
+          path: pr_number.txt
