@@ -9,3 +9,4 @@ jobs:
 
     steps:
       - name: Trigger from PR
+        run: echo "Let's go"
