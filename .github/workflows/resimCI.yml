@@ -28,9 +28,7 @@ jobs:
           script: |
             const run = context.payload.workflow_run;
             const sha = run.head_sha;
-      
             const conclusion = run.conclusion;
-      
             let state;
             switch (conclusion) {
               case "success":
@@ -48,17 +46,15 @@ jobs:
               default:
                 state = "error";
             }
-            
             const prNumber = run.pull_requests.length > 0 ? run.pull_requests[0].number : null;
-            const ltxPrServer = process.env.LTX_PR_SERVER;
-            const targetUrl = prNumber ? `${ltxPrServer}/${prNumber}/` : ltxPrServer;
-      
+            const ltxServer = process.env.LTX_PR_SERVER;
+            const targetUrl = prNumber ? `${ltxServer}/${prNumber}/` : ltxServer;
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: sha,
               state: state,
-              context: "CI / ReSim checks",
+              context: "CI / resim_checks",
               description: `ReSim finished with ${conclusion}`,
-              target_url: ltxPrServer
+              target_url: targetUrl
             });
