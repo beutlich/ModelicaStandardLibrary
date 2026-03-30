@@ -16,26 +16,23 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Download PR number artifact
-        uses: actions/download-artifact@v8
+      - name: Get PR number
+        uses: 8BitJonny/gh-get-current-pr@4.0.0
+        id: PR
         with:
-          name: pr-number
-          path: ./artifact
-
-      - name: Read PR number
-        id: read_pr
-        run: |
-          PR_NUMBER=$(cat ./artifact/pr_number.txt)
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "PR_NUMBER=$PR_NUMBER"
+          sha: ${{ github.event.workflow_run.head_sha }}
+          filterOutClosed: true
+          filterOutDraft: true
 
       - name: Run ReSim
+        if: steps.PR.outputs.pr_found == 'true'
         run: |
           echo "LTX_PR_SERVER=${{ vars.LTX_PR_SERVER }}"
           echo "LTX_SCRIPT_LOCATION=${{ vars.LTX_SCRIPT_LOCATION }}"
           echo "LTX_TESTING_TOOLS=${{ vars.LTX_TESTING_TOOLS }}"
 
       - name: Report status back to PR
+        if: steps.PR.outputs.pr_found == 'true'
         uses: actions/github-script@v8
         with:
           script: |
@@ -72,5 +69,5 @@ jobs:
               target_url: targetUrl
             });
         env:
-          PR_NUMBER: ${{ env.PR_NUMBER }}
+          PR_NUMBER: ${{ steps.PR.outputs.number }}
           LTX_PR_SERVER: ${{ vars.LTX_PR_SERVER }}
