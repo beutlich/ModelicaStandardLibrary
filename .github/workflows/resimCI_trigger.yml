@@ -1,0 +1,12 @@
+name: Trigger CI ReSim
+
+on:
+  pull_request:
+
+jobs:
+  trigger-resim:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger ReSim from PR
+        run: echo "🚀 Let's go"
