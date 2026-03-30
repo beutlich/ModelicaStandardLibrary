@@ -6,7 +6,11 @@ on:
 jobs:
   trigger_resim_checks:
     runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.set_output.outputs.pr_number }}
 
     steps:
-      - name: Trigger ReSim from PR
-        run: echo "🚀 Let's go"
+      - name: Set PR number output
+        id: set_output
+        run: |
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
