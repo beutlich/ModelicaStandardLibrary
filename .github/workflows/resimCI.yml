@@ -50,5 +50,6 @@ jobs:
               sha: sha,
               state: state,
               context: "CI / ReSim checks",
-              description: `ReSim finished with ${conclusion}`
+              description: `ReSim finished with ${conclusion}`,
+              target_url: run.html_url
             });
