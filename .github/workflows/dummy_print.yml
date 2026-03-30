@@ -16,3 +16,39 @@ jobs:
           echo "LTX_PR_SERVER=${{ vars.LTX_PR_SERVER }}"
           echo "LTX_SCRIPT_LOCATION=${{ vars.LTX_SCRIPT_LOCATION }}"
           echo "LTX_TESTING_TOOLS=${{ vars.LTX_TESTING_TOOLS }}"
+
+      - name: Report status back to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const sha = run.head_sha;
+      
+            const conclusion = run.conclusion;
+      
+            let state;
+            switch (conclusion) {
+              case "success":
+                state = "success";
+                break;
+              case "failure":
+              case "timed_out":
+              case "action_required":
+                state = "failure";
+                break;
+              case "cancelled":
+              case "skipped":
+                state = "error";
+                break;
+              default:
+                state = "error";
+            }
+      
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: state,
+              context: "LTX Variables Check",
+              description: `Secure workflow ${conclusion}`
+            });
