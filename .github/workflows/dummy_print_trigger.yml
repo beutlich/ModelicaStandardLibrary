@@ -1,0 +1,8 @@
+name: Trigger Print LTX Variables
+
+on:
+  pull_request:
+
+jobs:
+  trigger-print-vars:
+    runs-on: ubuntu-latest
